@@ -102,17 +102,25 @@ if (!CC_EDITOR) {
     }
     // 重载子节点获取
     cc.Node.prototype.child = function(v_s_: string, update_b_?: boolean): cc.Node {
-        // 实时更新子节点
-        if (update_b_) {
-            this.__nodes_a.child_o.delete(v_s_);
-            temp1_o = this.getChildByName(v_s_);
-            this.__nodes_a.child_o.set(v_s_, temp1_o);
-        } else {
-            temp1_o = this.__nodes_a.child_o.get(v_s_);
-            if (!temp1_o) {
-                temp1_o = this.getChildByName(v_s_);
-                this.__nodes_a.child_o.set(v_s_, temp1_o);
+        let path_ss = v_s_.split("/");
+        let self = this;
+        for (let path_s of path_ss) {
+            // 实时更新子节点
+            if (update_b_) {
+                self.__nodes_a.child_o.delete(path_s);
+                temp1_o = self.getChildByName(path_s);
+                self.__nodes_a.child_o.set(path_s, temp1_o);
+            } else {
+                temp1_o = self.__nodes_a.child_o.get(path_s);
+                if (!temp1_o) {
+                    temp1_o = self.getChildByName(path_s);
+                    self.__nodes_a.child_o.set(path_s, temp1_o);
+                }
             }
+            if (!temp1_o) {
+                break;
+            }
+            self = temp1_o;
         }
         return temp1_o;
     }

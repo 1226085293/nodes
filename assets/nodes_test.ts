@@ -15,7 +15,7 @@ export default class nodes extends cc.Component {
     /* -------------------------------delimiter------------------------------- */
     onLoad() {
         this.node.child("a1").label.string = "测试文本";
-        this.node.child("a1").child("a11").label.string = "测试子文本";
+        this.node.child("a1/a11").label.string = "测试子文本";
         this.node.child("a2").sprite.spriteFrame = this.texture_o;
         
         // 开启自动更新子节点缓存

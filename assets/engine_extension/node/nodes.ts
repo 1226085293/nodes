@@ -5,7 +5,7 @@
 */
 if (!CC_EDITOR) {
     const component_ss = {
-        dragon_bones: dragonBones.ArmatureDisplay,
+        dragon_bones: globalThis.dragonBones ? globalThis.dragonBones.ArmatureDisplay : null,
         graphics: cc.Graphics,
         label: cc.Label,
         label_outline: cc.LabelOutline,
@@ -15,7 +15,7 @@ if (!CC_EDITOR) {
         particle_system: cc.ParticleSystem,
         particle_system_3d: cc.ParticleSystem3D,
         rich_text: cc.RichText,
-        sp_skeleton: sp.Skeleton,
+        sp_skeleton: globalThis.sp ? globalThis.sp.Skeleton : null,
         sprite: cc.Sprite,
         tiled_map: cc.TiledMap,
         tiled_tile: cc.TiledTile,
@@ -121,6 +121,22 @@ if (!CC_EDITOR) {
                 break;
             }
             self = temp1_o;
+        }
+        return temp1_o;
+    }
+    // 重载组件获取
+    cc.Node.prototype.component = function<T>(type: {prototype: T}, update_b_?: boolean): T {
+        // 实时更新子节点
+        if (update_b_) {
+            this.__nodes_a.component_o.delete(type);
+            temp1_o = this.getComponent(type);
+            this.__nodes_a.component_o.set(type, temp1_o);
+        } else {
+            temp1_o = this.__nodes_a.component_o.get(type);
+            if (!temp1_o) {
+                temp1_o = this.getComponent(type);
+                this.__nodes_a.component_o.set(type, temp1_o);
+            }
         }
         return temp1_o;
     }

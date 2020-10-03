@@ -18,12 +18,12 @@ export default class nodes extends cc.Component {
         this.node.child("a1/a11").label.string = "测试子文本";
         this.node.child("a2").sprite.spriteFrame = this.texture_o;
         
-        // 开启自动更新子节点缓存
+        // ------------------开启自动更新子节点缓存
         // this.node.child_update_b = true;
         // this.node.removeAllChildren();
         // cc.log(this.node.child("a1"));//null
 
-        // 不开启自动更新子节点缓存
+        // ------------------不开启自动更新子节点缓存
         // this.node.removeAllChildren();
         // cc.log(this.node.child("a1"));//cc_Node {_name: 'a1', ...
     }
